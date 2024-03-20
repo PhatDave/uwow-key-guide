@@ -7,7 +7,7 @@
 
     let docs: Document[] = []
     pb.collection('entry').getFullList({
-        sort: '-title',
+        sort: '+title',
         fields: 'id,collectionId,updated,title,content,thumbnail,images'
     }).then((e: any) => {
         // e is of type Document[] but idk how to force it to be that

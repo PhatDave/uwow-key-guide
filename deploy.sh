@@ -1,1 +1,1 @@
-pnpm build && tar -cf build.tar apps/web/build/ apps/web/captain-definition apps/web/nginx.conf apps/web/Dockerfile
+pnpm build && cd apps/web && tar -cf build.tar build package.json captain-definition Dockerfile && mv build.tar ../../

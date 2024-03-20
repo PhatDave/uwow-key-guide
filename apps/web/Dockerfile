@@ -1,10 +1,11 @@
-FROM nginx:stable-alpine3.17
+FROM node:18-alpine
 
 LABEL author="PhatDave"
 
 WORKDIR /app
 
 COPY ./build/ ./
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY package.json ./
 
-EXPOSE 8080
+EXPOSE 3000
+CMD ["node", "index.js"]

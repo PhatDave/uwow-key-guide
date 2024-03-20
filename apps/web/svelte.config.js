@@ -1,4 +1,5 @@
 import adapter from '@sveltejs/adapter-node';
+// https://kit.svelte.dev/docs/adapter-node
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -10,6 +11,9 @@ export default {
 	})],
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			out: 'build',
+			precompress: true,
+		}),
 	}
 };

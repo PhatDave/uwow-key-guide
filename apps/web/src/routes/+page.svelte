@@ -16,7 +16,7 @@
 </script>
 
 <div>
-    <div class="bg-base-300 w-full h-full grid grid-cols-2">
+    <div class="w-full h-full grid grid-cols-2">
         {#each docs as doc}
             <MenuItem {doc}/>
         {/each}

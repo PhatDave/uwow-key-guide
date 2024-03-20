@@ -1,35 +1,33 @@
 <script lang="ts">
     import {marked} from 'marked'
-    import PocketBase from 'pocketbase'
+    import {pb} from '$lib/pocketbase'
     import {onDestroy} from "svelte";
     import type {Document} from "$lib/types";
+    import {user} from "$stores/user";
 
     export let data;
     const id = data.slug
-    let doc: Document = {content: '', title: '', images: []}
-    const pb = new PocketBase('https://uwowkeys.site.quack-lab.dev')
+    let doc: Document
 
     pb.collection('entry').subscribe(id, function (e: any) {
         if (e.action === 'update') {
             doc = e.record
         }
     })
-    pb.collection('entry')
+    const promise = pb.collection('entry')
         .getOne(id, {fields: 'content,title,images'})
-        .then((e: any) => {
-            doc = e
-        })
+    promise.then((e: any) => {
+        doc = e
+    })
 
     let edit = false
     let timer: number
 
-    // TODO: Make auth somehow, figure it out
-
     function updateApi(content: string) {
+        // For some reason when this is called from a user that is not authenticated it returns 404
+        // It also throws an error from the sdk
+        // Whatever, don't care, as long as it actually prevents non admins from using the api
         pb.collection('entry').update(id, {content})
-        // No, it is automagically sent to the server, (IF you use the correct PB instance)
-        // It is - and it's simple
-        // I think
         clearTimeout(timer)
     }
 
@@ -58,32 +56,44 @@
     onDestroy(() => {
         pb.collection('entry').unsubscribe()
     })
+
+    let canEdit = false
+    $: {
+        canEdit = !!$user && ($user.role === 'admin' || $user.role === 'mod')
+    }
 </script>
 
 <template>
-    <div class="flex items-center">
-        <button
-                class="btn w-20 capitalize"
-                class:btn-outline={!edit}
-                class:btn-info={edit}
-                on:click={() => (edit = !edit)}>
-            Edit
-        </button>
-        <div class="flex flex-grow items-center justify-center">
-            <h1 class="text-5xl text-amber-700">{doc.title}</h1>
+    {#await promise}
+        <div class="flex items-center justify-center h-[80vh]">
+            <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
         </div>
-    </div>
+    {:then _ }
+        <div class="flex items-center">
+            <button
+                    class="btn w-20 capitalize"
+                    class:btn-outline={!edit}
+                    class:btn-info={edit}
+                    on:click={() => (edit = !edit)}
+                    disabled="{!canEdit}">
+                Edit
+            </button>
+            <div class="flex flex-grow items-center justify-center">
+                <h1 class="text-5xl text-amber-700">{doc.title}</h1>
+            </div>
+        </div>
 
-    <div class="h-[80vh] flex-1 items-center justify-start">
-        {#if edit}
+        <div class="h-[80vh] flex-1 items-center justify-start">
+            {#if edit}
 			<textarea
                     class="textarea min-h-[80vh] w-full"
                     bind:value={doc.content}
                     on:keyup={textChanged}/>
-        {:else}
-            <div class="h-full w-full px-10 py-4 text-xl">
-                {@html render(doc.content)}
-            </div>
-        {/if}
-    </div>
+            {:else}
+                <div class="h-full w-full px-10 py-4 text-xl">
+                    {@html render(doc.content)}
+                </div>
+            {/if}
+        </div>
+    {/await}
 </template>

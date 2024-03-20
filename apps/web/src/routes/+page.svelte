@@ -1,11 +1,10 @@
 <script lang="ts">
     import {pb} from '$lib/pocketbase';
-    import type {Image, Entry, PBRecord} from '$lib/types';
+    import type {Document} from '$lib/types';
     // We should move types to $lib i think
     import MenuItem from '$components/MenuItem.svelte';
 
     // Look at how you should do it
-    type Document = PBRecord<Entry, Image>;
     const documents = pb.collection('entry').getFullList<Document>({
         sort: '+title',
         fields: 'id,collectionId,updated,title,content,thumbnail,images'

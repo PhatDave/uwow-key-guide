@@ -2,15 +2,17 @@ import {writable} from 'svelte/store';
 import {redirect} from '@sveltejs/kit';
 import {pb} from '$lib/pocketbase';
 import type {RecordModel} from 'pocketbase';
+import type {PBRecord} from "$lib/types";
 
-export type User = {
+export type User = PBRecord<{
     username: string;
     avatarUrl: string;
     email: string;
     accessToken: string;
     refreshToken: string;
     discordId: string;
-}
+    role: string;
+}>
 
 function createUserStore() {
     const {subscribe, set, update} = writable<User | null>(null);
@@ -21,33 +23,22 @@ function createUserStore() {
         set,
 
         logout: () => {
-            // This here clears the auth store, and hooks.client.ts reacts and clears the cookie
+            // This call will automatically set user to null so no worries
+            // Because the user store is a svelte store mimicking the authStore
             pb.authStore.clear();
-            // We set the store to null, and svelte-ui immediately reacts to this
-            // But it might be a good idea to invalidate the whole page
-            //
             // Well if the user logs out, the store is null
-            set(null);
+            // set(null);
         },
         login: {
             discord: async () => {
                 try {
-                    // It's in trycatch, because this authetication throws if user clicks on cancel
-                    // If successful, this creates a new user
                     const authData = await pb.collection('users').authWithOAuth2({
                         provider: 'discord',
-                        // The scopes are things that are provided by discord
-                        // For example, when you query a url, you might make it only request the user's email address, you could also ask for what guilds (servers) he is in.
-                        // Look at the url generator now, for an example
                         scopes: ['identify', 'guilds']
-                        // To check if a user is in the indecisive discord
                     });
 
-                    // So now if it's not successful, i throw here
                     if (!authData.meta) throw new Error('Discord oAuth2 failed');
 
-                    // Otherwise , i update the new pb user with the following
-                    // Yes
                     const user = await pb
                         .collection('users')
                         .update<User & RecordModel>(authData.record.id, {
@@ -57,19 +48,8 @@ function createUserStore() {
                             discordId: authData.meta.id
                         } as Omit<User, 'email' | 'username'>);
 
-                    // And then i just update the svelte store with the user's data
-                    //
-                    // This is the svelte store
-                    // We set it after the user logs in
-                    // It is the store itself
-                    set({
-                        accessToken: user.accessToken,
-                        avatarUrl: user.avatarUrl,
-                        email: user.email,
-                        refreshToken: user.refreshToken,
-                        username: user.username,
-                        discordId: user.discordId
-                    });
+                    // This is also probably unnecessary
+                    // set(user);
                 } catch (error) {
                     console.error(error);
                 }

@@ -15,16 +15,6 @@ export type NavLink = {
     };
 };
 
-export type Document = {
-    id: string,
-    collectionId: string,
-    created: Date,
-    updated: Date,
-    title: string,
-    content: string,
-    thumbnail: string,
-    images: string[],
-}
 
 export type PBRecord<T, E = unknown> = RecordModel &
     T & (E extends Record<string, unknown> ? { expand: { [Key in keyof E]: E[Key] } & RecordModel; } : unknown);
@@ -37,3 +27,4 @@ export type Entry = {
 export type Image = {
     image: string
 }
+export type Document = PBRecord<Entry, Image>;

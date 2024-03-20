@@ -30,7 +30,7 @@
                     <Fa icon={faDiscord} size="1.3x" class="text-white"/>
                 </button>
             {:else}
-                <span class="text-lg font-extrabold">
+                <span class="text-lg font-extrabold px-4" on:click={user.logout}>
                     {$user.username}
                 </span>
                 <img src={$user.avatarUrl} class="h-10 rounded-full"/>

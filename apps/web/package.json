@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "marked": "^12.0.1",
-    "mdsvex": "^0.11.0",
     "pocketbase": "^0.21.1"
   }
 }

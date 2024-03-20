@@ -2,17 +2,11 @@
     import {marked} from 'marked'
     import PocketBase from 'pocketbase'
     import {onDestroy} from "svelte";
-    import type {Document} from "$types";
+    import type {Document} from "$lib/types";
 
     export let data;
     const id = data.slug
     let doc: Document = {content: '', title: '', images: []}
-    let md = 'Loading...'
-    $: {
-        if (doc) {
-            md = doc.content
-        }
-    }
     const pb = new PocketBase('https://uwowkeys.site.quack-lab.dev')
 
     pb.collection('entry').subscribe(id, function (e: any) {
@@ -33,16 +27,17 @@
 
     function updateApi(content: string) {
         pb.collection('entry').update(id, {content})
-      // No, it is automagically sent to the server, (IF you use the correct PB instance)
-      // It is - and it's simple
-      I think
+        // No, it is automagically sent to the server, (IF you use the correct PB instance)
+        // It is - and it's simple
+        // I think
         clearTimeout(timer)
     }
 
     function textChanged() {
+        console.log("Text changed");
         clearTimeout(timer)
         timer = setTimeout(() => {
-            updateApi(md)
+            updateApi(doc.content)
         }, 200)
     }
 
@@ -66,29 +61,29 @@
 </script>
 
 <template>
-	<div class="flex items-center">
-		<button
-			class="btn w-20 capitalize"
-			class:btn-outline={!edit}
-			class:btn-info={edit}
-			on:click={() => (edit = !edit)}>
-			Edit
-		</button>
-		<div class="flex flex-grow items-center justify-center">
-			<h1 class="text-5xl text-amber-700">{doc.title}</h1>
-		</div>
-	</div>
+    <div class="flex items-center">
+        <button
+                class="btn w-20 capitalize"
+                class:btn-outline={!edit}
+                class:btn-info={edit}
+                on:click={() => (edit = !edit)}>
+            Edit
+        </button>
+        <div class="flex flex-grow items-center justify-center">
+            <h1 class="text-5xl text-amber-700">{doc.title}</h1>
+        </div>
+    </div>
 
-	<div class="h-[80vh] flex-1 items-center justify-start">
-		{#if edit}
+    <div class="h-[80vh] flex-1 items-center justify-start">
+        {#if edit}
 			<textarea
-				class="textarea min-h-[80vh] w-full"
-				bind:value={md}
-				on:keyup={textChanged} />
-		{:else}
-			<div class="h-full w-full px-10 py-4 text-xl">
-				{@html render(md)}
-			</div>
-		{/if}
-	</div>
+                    class="textarea min-h-[80vh] w-full"
+                    bind:value={doc.content}
+                    on:keyup={textChanged}/>
+        {:else}
+            <div class="h-full w-full px-10 py-4 text-xl">
+                {@html render(doc.content)}
+            </div>
+        {/if}
+    </div>
 </template>

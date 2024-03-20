@@ -79,11 +79,11 @@
                 Edit
             </button>
             <div class="flex flex-grow items-center justify-center">
-                <h1 class="text-5xl text-amber-700">{doc.title}</h1>
+                <h1 class="text-5xl text-amber-700 select-none">{doc.title}</h1>
             </div>
         </div>
 
-        <div class="h-[80vh] flex-1 items-center justify-start">
+        <div class="h-[80rem] flex-1 items-center justify-start">
             {#if edit}
 			<textarea
                     class="textarea min-h-[80vh] w-full"

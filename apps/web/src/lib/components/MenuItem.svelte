@@ -12,7 +12,7 @@
     <!--    <div class="card w-[{MENU_THUMBNAIL_SIZE[0]}px] h-[{MENU_THUMBNAIL_SIZE[1]}px] bg-base-100 shadow-xl image-full">-->
     <div class="card lg:card-side shadow-xl py-4 px-4 cursor-pointer"
          on:click={goto("doc/" + doc.id)}>
-        <figure><img class="w-[344px] h-[180px]" src="{IMAGE_URL}" alt="{doc.title}"/></figure>
+        <img class="w-[20rem] h-[10rem]" src="{IMAGE_URL}" alt="{doc.title}"/>
         <!--        <div class="card-body">-->
         <!--            <h2 class="card-title">{doc.title}</h2>-->
         <!--        </div>-->

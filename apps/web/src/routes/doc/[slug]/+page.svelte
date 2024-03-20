@@ -2,22 +2,28 @@
     import {marked} from 'marked'
     import PocketBase from 'pocketbase'
     import {onDestroy} from "svelte";
+    import type {Document} from "$types";
 
     export let data;
     const id = data.slug
-
-    const pb = new PocketBase('https://uwowkeys.site.quack-lab.dev')
+    let doc: Document = {content: '', title: '', images: []}
     let md = 'Loading...'
+    $: {
+        if (doc) {
+            md = doc.content
+        }
+    }
+    const pb = new PocketBase('https://uwowkeys.site.quack-lab.dev')
 
     pb.collection('entry').subscribe(id, function (e: any) {
         if (e.action === 'update') {
-            md = e.record.content
+            doc = e.record
         }
     })
     pb.collection('entry')
-        .getOne(id, {fields: 'content'})
+        .getOne(id, {fields: 'content,title,images'})
         .then((e: any) => {
-            md = e.content
+            doc = e
         })
 
     let edit = false
@@ -57,12 +63,18 @@
 </script>
 
 <template>
-    <button class="w-20 btn capitalize"
-            class:btn-outline={!edit}
-            class:btn-info={edit}
-            on:click={() => (edit = !edit)}>
-        Edit
-    </button>
+    <div class="flex items-center">
+        <button class="w-20 btn capitalize"
+                class:btn-outline={!edit}
+                class:btn-info={edit}
+                on:click={() => (edit = !edit)}>
+            Edit
+        </button>
+        <div class="flex justify-center items-center flex-grow">
+            <h1 class="text-5xl text-amber-700">{doc.title}</h1>
+        </div>
+    </div>
+
     <div class="flex-1 items-center justify-start h-[80vh]">
         {#if edit}
         <textarea

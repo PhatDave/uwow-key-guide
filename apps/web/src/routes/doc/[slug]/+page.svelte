@@ -6,29 +6,29 @@
     import {user} from "$stores/user"
     import Fuse from 'fuse.js'
 
-    export let data
-    const id = data.slug
-    let canEdit = false
-    let edit = false
-    let timer: NodeJS.Timeout
-    let files: File[] = []
-    let images: Image[] = []
-    let sortedImages: Image[] = []
-    $: sortedImages = images.slice(0, 10)
-    let doc: Document
-    let fuse: Fuse<Image>
+    export let data;
+    const id = data.slug;
+    let canEdit = false;
+    let edit = false;
+    let timer: NodeJS.Timeout;
+    let files: File[] = [];
+    let images: Image[] = [];
+    let sortedImages: Image[] = [];
+    $: sortedImages = images.slice(0, 10);
+    let doc: Document;
+    let fuse: Fuse<Image>;
 
-    let loading = true
-    let textareaElement: HTMLElement
-    let imageInput: HTMLElement
-    let imageSearchQuery: string
-    let imageInputContainer: HTMLElement
+    let loading = true;
+    let textareaElement: HTMLElement;
+    let imageInput: HTMLElement;
+    let imageSearchQuery: string;
+    let imageInputContainer: HTMLElement;
 
     pb.collection('entry').subscribe(id, function (e: any) {
         if (e.action === 'update') {
             doc = e.record
         }
-    })
+    });
 
     onMount(async () => {
         doc = await pb.collection('entry').getOne(id, {fields: 'content,title', extend: 'images'})
@@ -44,6 +44,11 @@
             // threshold: 0.4
         })
         loading = false
+    });
+
+    onDestroy(() => {
+        updateApi(doc)
+        pb.collection('entry').unsubscribe()
     });
 
     function updateApi(doc: Document) {
@@ -84,7 +89,7 @@
         clearTimeout(timer);
         timer = setTimeout(() => {
             updateApi(doc);
-        }, 200);
+        }, 4000);
     }
 
     function imageInputEvent(event: Event) {
@@ -130,6 +135,7 @@
         html = html.replaceAll(/<h1>/g, '<h1 class="text-4xl font-bold text-amber-700">');
         html = html.replaceAll(/<h2>/g, '<h2 class="text-3xl font-bold text-amber-700">');
         html = html.replaceAll(/<h3>/g, '<h3 class="text-2xl font-bold text-amber-700">');
+        html = html.replaceAll(/<a>/g, '<a class="text-sky-400">');
 
         const imageRegex = /<img src="([^"]+?)"(?:\s*alt="([^"]+)?")?>{(\d+),\s*(\d+)}/g
         let match;
@@ -151,10 +157,6 @@
 
         return html
     }
-
-    onDestroy(() => {
-        pb.collection('entry').unsubscribe()
-    })
 
     $: {
         canEdit = !!$user && ($user.role === 'admin' || $user.role === 'mod')

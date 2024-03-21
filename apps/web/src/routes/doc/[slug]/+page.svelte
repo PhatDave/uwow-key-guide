@@ -9,7 +9,7 @@
     export let data
     const id = data.slug
     let canEdit = false
-    let edit = true
+    let edit = false
     let timer: NodeJS.Timeout
     let files: File[] = []
     let images: Image[] = []
@@ -72,6 +72,15 @@
         if (event.key == "Escape") {
             ImageInput.hide()
         }
+        // Tab is caught by the browser... Sadge...
+        // if (event.key == "Tab") {
+        //     event.preventDefault()
+        //     const selectionStart = textareaElement.selectionStart;
+        //     const selectionEnd = textareaElement.selectionEnd;
+        //     const textBefore = doc.content.slice(0, selectionStart - 1);
+        //     const textAfter = doc.content.slice(selectionEnd);
+        //     doc.content = `${textBefore}    ${textAfter}`;
+        // }
         clearTimeout(timer);
         timer = setTimeout(() => {
             updateApi(doc);
@@ -104,22 +113,42 @@
         const selectionEnd = textareaElement.selectionEnd;
         const textBefore = doc.content.slice(0, selectionStart - 1);
         const textAfter = doc.content.slice(selectionEnd);
+
         doc.content = `${textBefore}(${imageLink})${textAfter}`;
         ImageInput.hide()
     }
 
     function render(markdown: string) {
         // @ts-ignore
-        let html: string = marked(markdown)
-        html = html.replaceAll(/<ul>/g, '<ul class="list-disc pl-5">')
-        html = html.replaceAll(/<ol>/g, '<ol class="list-decimal pl-5">')
-        html = html.replaceAll(/<strong>/g, '<strong class="font-bold text-sky-400">')
-        html = html.replaceAll(/<em>/g, '<em class="italic text-sky-400">')
-        html = html.replaceAll(/<code>/g, '<code class="bg-gray-200 text-gray-800 px-1 rounded">')
-        html = html.replaceAll(/<pre>/g, '<pre class="bg-gray-200 text-gray-800 px-1 rounded">')
-        html = html.replaceAll(/<h1>/g, '<h1 class="text-4xl font-bold text-amber-700">')
-        html = html.replaceAll(/<h2>/g, '<h2 class="text-3xl font-bold text-amber-700">')
-        html = html.replaceAll(/<h3>/g, '<h3 class="text-2xl font-bold text-amber-700">')
+        let html: string = marked(markdown);
+        html = html.replaceAll(/<ul>/g, '<ul class="list-disc pl-5">');
+        html = html.replaceAll(/<ol>/g, '<ol class="list-decimal pl-5">');
+        html = html.replaceAll(/<strong>/g, '<strong class="font-bold text-sky-400">');
+        html = html.replaceAll(/<em>/g, '<em class="italic text-sky-400">');
+        html = html.replaceAll(/<code>/g, '<code class="bg-gray-200 text-gray-800 px-1 rounded">');
+        html = html.replaceAll(/<pre>/g, '<pre class="bg-gray-200 text-gray-800 px-1 rounded">');
+        html = html.replaceAll(/<h1>/g, '<h1 class="text-4xl font-bold text-amber-700">');
+        html = html.replaceAll(/<h2>/g, '<h2 class="text-3xl font-bold text-amber-700">');
+        html = html.replaceAll(/<h3>/g, '<h3 class="text-2xl font-bold text-amber-700">');
+
+        const imageRegex = /<img src="([^"]+?)"(?:\s*alt="([^"]+)?")?>{(\d+),\s*(\d+)}/g
+        let match;
+        do {
+            match = imageRegex.exec(html);
+            if (match) {
+                const [element, url, alt, width, height] = match
+                html = html.replace(element, `<img src="${url}" alt="${alt}" width="${width}" height="${height}" />`);
+            }
+        } while (match);
+
+        // const modalImage = /\?<a.+?href="([^"]+)">([^<]+)<\/a>/g.exec(html)
+        // if (modalImage) {
+        //     const [url, text] = modalImage.slice(1)
+        //     html = html.replace(modalImage[0], `<ModalImage link="${url}" />`);
+        // // Cannot dynamically create svelte components so easily...
+        //     console.log(html);
+        // }
+
         return html
     }
 

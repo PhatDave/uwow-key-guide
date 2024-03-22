@@ -34,7 +34,7 @@
         doc = await pb.collection('entry').getOne(id, {fields: 'content,title', extend: 'images'})
         images = await pb.collection('image').getFullList({
             filter: `(entry='${id}')`,
-            fields: 'image,collectionId,id',
+            fields: 'image,collectionId,id,overlay',
         })
         fuse = new Fuse(images, {
             keys: ['image'],
@@ -137,13 +137,13 @@
         html = html.replaceAll(/<h3>/g, '<h3 class="text-2xl font-bold text-amber-700">');
         html = html.replaceAll(/<a>/g, '<a class="text-sky-400">');
 
-        const imageRegex = /<img src="([^"]+?)"(?:\s*alt="([^"]+)?")?>{(\d+),\s*(\d+)}/g
+        const imageRegex = /<img src="([^"]+?)"(?:\s*alt="([^"]+)?")?>{(\d+)}/g
         let match;
         do {
             match = imageRegex.exec(html);
             if (match) {
-                const [element, url, alt, width, height] = match
-                html = html.replace(element, `<img src="${url}" alt="${alt}" width="${width}" height="${height}" />`);
+                const [element, url, alt, width] = match
+                html = html.replace(element, `<img src="${url}" alt="${alt}" width="${width}" />`);
             }
         } while (match);
 
@@ -207,7 +207,7 @@
                     class="btn w-20 capitalize"
                     class:btn-outline={!edit}
                     class:btn-info={edit}
-                    on:click={() => (edit = !edit)}
+                    on:click={() => (updateApi(doc), edit = !edit)}
                     disabled="{!canEdit}">
                 Edit
             </button>

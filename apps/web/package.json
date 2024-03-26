@@ -7,25 +7,25 @@
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "playwright test",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "format": "prettier --plugin-search-dir=../../ --ignore-path=../../.prettierignore --write .",
-    "lint": "concurrently -c \"blue,red\" --names \"eslint,svelte-check\" \"eslint --ignore-path=../../.eslintignore .\" \"pnpm:check\""
+    "lint": "eslint ."
   },
   "devDependencies": {
+    "@cartamd/plugin-attachment": "^3.1.0",
     "@fontsource/roboto": "^5.0.8",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@playwright/test": "^1.39.0",
     "@sveltejs/adapter-node": "^5.0.1",
     "@sveltejs/adapter-static": "^2.0.3",
     "@sveltejs/kit": "1.27.3",
     "@types/js-cookie": "^3.0.6",
     "autoprefixer": "^10.4.16",
+    "carta-md": "^3.6.1",
     "daisyui": "^3.9.4",
+    "github-markdown-css": "^5.5.1",
     "js-cookie": "^3.0.5",
     "postcss": "^8.4.31",
     "postcss-load-config": "^4.0.1",
@@ -37,13 +37,7 @@
     "tailwindcss-hero-patterns": "^0.1.2",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
-    "vite": "^4.5.0"
-  },
-  "dependencies": {
-    "brace": "^0.11.1",
-    "fuse.js": "^7.0.0",
-    "marked": "^12.0.1",
-    "pocketbase": "^0.21.1",
-    "svelte-ace": "^1.0.21"
+    "vite": "^4.5.0",
+    "pocketbase": "^0.21.1"
   }
 }

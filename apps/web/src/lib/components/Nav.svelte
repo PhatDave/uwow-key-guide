@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ThemeToggle from '$lib/components/theme/ThemeToggle.svelte';
+  import ThemeToggle from '$lib/components/ThemeToggle.svelte';
   import { faDiscord } from '@fortawesome/free-brands-svg-icons';
   import Fa from 'svelte-fa';
 
@@ -13,7 +13,9 @@
 >
   <!-- Navigation-->
   <nav>
-    <a class="hover:text-primary text-4xl font-bold transition-all" href="/"> Home </a>
+    <a class="hover:text-primary text-4xl font-bold transition-all" href="/">
+      Home
+    </a>
   </nav>
 
   <div class="flex items-center gap-x-4">

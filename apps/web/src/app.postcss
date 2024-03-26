@@ -19,11 +19,16 @@ html {
 }
 
 @layer base {
-    input[type='number']::-webkit-inner-spin-button,
-    input[type='number']::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+  body,
+  html {
+    @apply heropattern-topography-black/5 dark:heropattern-topography-white/5 min-h-screen bg-fixed;
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 input[type='number'] {

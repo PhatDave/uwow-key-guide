@@ -12,27 +12,14 @@ const config = {
         sans: ['roboto', ...defaultTheme.fontFamily.sans]
       }
     },
-    heroPatternsOpacities: ['10'],
+    heroPatternsOpacities: ['5'],
     heroPatterns: {
       topography: heropatterns.topography
     }
   },
 
   daisyui: {
-    themes: [
-      {
-        light: {
-          ...require('daisyui/src/theming/themes')['[data-theme=lofi]'],
-          primary: '#45B1E8',
-          secondary: '#fbbf24'
-        },
-        dark: {
-          ...require('daisyui/src/theming/themes')['[data-theme=black]'],
-          primary: '#45B1E8',
-          secondary: '#fbbf24'
-        }
-      }
-    ]
+    themes: ['black', 'light']
   },
   plugins: [require('daisyui'), require('tailwindcss-hero-patterns')]
 };

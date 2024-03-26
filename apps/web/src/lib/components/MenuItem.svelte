@@ -1,20 +1,13 @@
 <script lang="ts">
-    import type {Document} from "$lib/types";
-    import {goto} from '$app/navigation';
-    import {PocketbaseImageToUrl} from "$lib/pocketbase";
+  import { pbImgToUrl, getDocuments } from '$lib/pocketbase';
 
-    export let doc: Document
+  export let doc: Awaited<ReturnType<typeof getDocuments>>[number];
 
-    const IMAGE_URL = PocketbaseImageToUrl(doc, doc.thumbnail)
+  const imgUrl = pbImgToUrl(doc, doc.thumbnail);
 </script>
 
-<template>
-    <!--    <div class="card w-[{MENU_THUMBNAIL_SIZE[0]}px] h-[{MENU_THUMBNAIL_SIZE[1]}px] bg-base-100 shadow-xl image-full">-->
-    <div class="card lg:card-side shadow-xl py-4 px-4 cursor-pointer"
-         on:click={goto("doc/" + doc.id)}>
-        <img class="w-[20rem] h-[10rem]" src="{IMAGE_URL}" alt="{doc.title}"/>
-        <!--        <div class="card-body">-->
-        <!--            <h2 class="card-title">{doc.title}</h2>-->
-        <!--        </div>-->
-    </div>
-</template>
+<li class="rounded-box">
+  <a class="contents" href={`/doc/${doc.id}`}>
+    <img class="aspect-video h-24 md:h-52" src={imgUrl} alt={doc.title} />
+  </a>
+</li>

@@ -20,8 +20,7 @@
                 upload: async file => {
                     console.log(file);
                     const record = await saveImg(file, documentId);
-                    const imgUrl = pbImgToUrl(record, record.image);
-                    return imgUrl;
+                    return pbImgToUrl(record, record.image);
                 }
             })
         ]

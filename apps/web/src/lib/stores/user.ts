@@ -35,17 +35,18 @@ function createUserStore() {
                         scopes: ['identify', 'guilds']
                     });
 
+                    console.log(authData);
                     if (!authData.meta) {
                         pb.authStore.clear();
                         throw new Error('Discord oAuth2 failed');
                     }
 
-                    // await pb.collection('users').update(authData.record.id, {
-                    // 	accessToken: authData.meta.accessToken,
-                    // 	avatarUrl: authData.meta.avatarUrl,
-                    // 	refreshToken: authData.meta.refreshToken,
-                    // 	discordId: authData.meta.id
-                    // });
+                    await pb.collection('users').update(authData.record.id, {
+                        accessToken: authData.meta.accessToken,
+                        avatarUrl: authData.meta.avatarUrl,
+                        refreshToken: authData.meta.refreshToken,
+                        discordId: authData.meta.id
+                    });
                 } catch (error) {
                     console.error(error);
                 }

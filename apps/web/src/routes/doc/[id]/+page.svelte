@@ -5,6 +5,7 @@
     import Fa from 'svelte-fa';
     import {user} from '$lib/stores/user';
     import {pb} from "$lib/pocketbase";
+    import {onDestroy, onMount} from "svelte";
 
     Fa;
 
@@ -34,6 +35,19 @@
     function updateApi(content: string) {
         pb.collection('document').update(id, {content});
     }
+
+    function toggleModeListener(e) {
+        if (e.ctrlKey && e.key == 'y') {
+            e.preventDefault();
+            toggleMode();
+        }
+    }
+    onMount(() => {
+        document.addEventListener('keyup', toggleModeListener);
+    });
+    onDestroy(() => {
+        document.removeEventListener('keyup', toggleModeListener);
+    });
 </script>
 
 <section class="form-control flex-1 justify-center">

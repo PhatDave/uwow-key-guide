@@ -13,6 +13,8 @@
     const {id} = data;
     let mode: 'edit' | 'preview' = 'preview';
     let content = data.content;
+    let userIsAdmin = false
+    $: userIsAdmin = !!$user && $user.isAdmin;
 
     function toggleMode() {
         if (!$user || $user.isAdmin == false) {
@@ -42,13 +44,13 @@
     {/if}
 </section>
 
-<!--{#if userIsAdmin}-->
-<button class="sticky bottom-[5%] left-[95%] inline-flex h-12 w-12 items-center justify-center rounded-full bg-black text-white dark:bg-white dark:text-black"
-        on:click={toggleMode}>
-    {#if mode === 'preview'}
-        <Fa icon={faPen} size="1.3x"/>
-    {:else if mode === 'edit'}
-        <Fa icon={faEye} size="1.3x"/>
-    {/if}
-</button>
-<!--{/if}-->
+{#if userIsAdmin}
+    <button class="sticky bottom-[5%] left-[95%] inline-flex h-12 w-12 items-center justify-center rounded-full bg-black text-white dark:bg-white dark:text-black"
+            on:click={toggleMode}>
+        {#if mode === 'preview'}
+            <Fa icon={faPen} size="1.3x"/>
+        {:else if mode === 'edit'}
+            <Fa icon={faEye} size="1.3x"/>
+        {/if}
+    </button>
+{/if}

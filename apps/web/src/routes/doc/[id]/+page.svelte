@@ -49,6 +49,16 @@
     onDestroy(() => {
         document.removeEventListener('keyup', toggleModeListener);
     });
+
+//     TODO: Enable ctrl+s to save as markdown
+//     TODO: Enable live update
+//     To do this we need a separate API
+//     What the API will do is:
+//     Take in new content
+//     Try to merge the new content with the existing content
+//     If the merge is successful, update the content
+//     If the merge is unsuccessful, replace the old content with the new content
+//     (The idea being last edit wins)
 </script>
 
 <section class="form-control flex-1 justify-center">

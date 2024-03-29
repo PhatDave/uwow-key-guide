@@ -7,8 +7,13 @@
     export let content: string;
 
     async function render(content: string) {
-        // Extend this render however you want
-        return await marked(content);
+        let rendered = await marked(content);
+
+        // This will only work if text-sky-500 is used for titles like the above, sadly
+        rendered = rendered.replaceAll(/(?<!<h\d>)<strong>/g, '<strong class="text-purple-300">');
+        rendered = rendered.replaceAll(/(?<!<strong>)<em>/g, '<em class="text-purple-300">');
+
+        return rendered;
     }
 </script>
 
@@ -38,5 +43,13 @@
         .markdown-body {
             padding: 15px;
         }
+    }
+
+    :global(.markdown-body ol) {
+        @apply !list-decimal;
+    }
+
+    :global(.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5) {
+        @apply text-sky-500
     }
 </style>

@@ -3,13 +3,17 @@
     import '@cartamd/plugin-attachment/default.css';
     import {Carta, CartaEditor} from 'carta-md';
     import {attachment} from '@cartamd/plugin-attachment';
+    import { createEventDispatcher } from 'svelte';
 
     import {saveImg} from '$lib/pocketbase/models/images';
     import {pbImgToUrl} from '$lib/pocketbase/index.js';
+    import {onDestroy, onMount} from "svelte";
 
     // The content of the editor
     export let content: string;
     export let documentId: string;
+    const dispatch = createEventDispatcher();
+    let ticker: number;
 
     const carta = new Carta({
         // Remember to use a sanitizer to prevent XSS attacks!
@@ -24,6 +28,15 @@
                 }
             })
         ]
+    });
+
+    onMount(() => {
+        ticker = setInterval(() => {
+            dispatch('update', {content: content});
+        }, 3000);
+    });
+    onDestroy(() => {
+        clearInterval(ticker);
     });
 </script>
 

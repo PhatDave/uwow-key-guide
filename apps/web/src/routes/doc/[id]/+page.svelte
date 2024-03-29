@@ -23,6 +23,7 @@
             return;
         }
         mode = mode === 'edit' ? 'preview' : 'edit';
+        updateApi(content);
     }
 
     function contentUpdated(e) {

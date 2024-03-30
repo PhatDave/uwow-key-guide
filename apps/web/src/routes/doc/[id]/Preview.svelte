@@ -8,11 +8,6 @@
 
     async function render(content: string) {
         let rendered = await marked(content);
-
-        // This will only work if text-sky-500 is used for titles like the above, sadly
-        rendered = rendered.replaceAll(/(?<!<h\d>)<strong>/g, '<strong class="text-purple-300">');
-        rendered = rendered.replaceAll(/(?<!<strong>)<em>/g, '<em class="text-purple-300">');
-
         return rendered;
     }
 </script>
@@ -49,7 +44,17 @@
         @apply !list-decimal;
     }
 
-    :global(.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5) {
-        @apply text-sky-500
+    :global(.markdown-body h1,
+        .markdown-body h2,
+        .markdown-body h3,
+        .markdown-body h4,
+        .markdown-body h5,
+        .markdown-body strong:not(h1 > strong),
+        .markdown-body strong:not(h2 > strong),
+        .markdown-body strong:not(h3 > strong),
+        .markdown-body strong:not(h4 > strong),
+        .markdown-body strong:not(h5 > strong),
+        .markdown-body em:not(strong > em)) {
+        @apply bg-gradient-to-r from-sky-300 to-purple-300 text-base-100 p-2 rounded-lg text-transparent bg-clip-text inline-block p-0
     }
 </style>

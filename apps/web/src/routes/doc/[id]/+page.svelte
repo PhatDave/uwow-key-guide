@@ -6,6 +6,7 @@
     import {user} from '$lib/stores/user';
     import {onDestroy, onMount} from "svelte";
     import DocService from "$lib/pocketbase/models/documents";
+    import SpecService from "$lib/pocketbase/models/specs";
 
     Fa;
 
@@ -44,11 +45,11 @@
         }
     }
 
-    // let specs = [];
-    // SpecService.GetAll().then((res) => {
-    //     specs = res;
-    //     console.log(res);
-    // });
+    let specs = [];
+    SpecService.GetAll().then((res) => {
+        specs = res;
+        console.log(res);
+    });
 
     onMount(() => {
         document.addEventListener('keyup', toggleModeListener);

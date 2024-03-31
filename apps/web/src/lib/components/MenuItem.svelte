@@ -4,7 +4,6 @@
 
     export let doc: Awaited<PBRecord<Document>>[number];
 
-    console.log(doc);
     const imgUrl = PBImgToUrl(doc, doc.thumbnail);
 </script>
 

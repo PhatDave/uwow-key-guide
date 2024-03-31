@@ -22,7 +22,6 @@
         extensions: [
             attachment({
                 upload: async file => {
-                    console.log(file);
                     const record = await ImageService.Save(file, documentId);
                     return PBImgToUrl(record, record.image);
                 }

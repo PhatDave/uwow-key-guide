@@ -35,7 +35,6 @@ function createUserStore() {
                         scopes: ['identify', 'guilds']
                     });
 
-                    console.log(authData);
                     if (!authData.meta) {
                         pb.authStore.clear();
                         throw new Error('Discord oAuth2 failed');

@@ -11,7 +11,7 @@
     }
 </script>
 
-<article class="markdown-body !bg-base-100 w-full h-full outline outline-1">
+<article class="markdown-body !bg-base-100 outline outline-1">
     {#await render(content)}
         <div class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 gap-4">
             <p class="text-4xl">Loading...</p>
@@ -26,9 +26,8 @@
 
 <style>
     .markdown-body {
-        min-width: 20rem;
-        max-width: 75rem;
-        margin: 0 auto;
+        /*min-width: 20rem;*/
+        /*max-width: 40rem;*/
         padding: 45px;
         font-size: 1.2rem;
     }

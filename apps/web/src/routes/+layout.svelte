@@ -25,7 +25,7 @@
 
 <div class="form-control min-h-screen">
     <Nav/>
-    <main class="form-control container relative mx-auto flex-1">
+    <main class="form-control container relative flex-1 mx-auto">
         <slot/>
     </main>
 </div>

@@ -6,7 +6,6 @@ export type Document = {
     thumbnail: string;
 };
 
-
 const DocService = {
     GetAll: async () => {
         return pb.collection('document').getFullList<PBRecord<Document>>({
@@ -14,12 +13,12 @@ const DocService = {
             fields: 'id,collectionId,updated,title,content,thumbnail,images'
         });
     },
-    GetById(id: string): Promise<PBRecord<Document>> {
+    GetById(id: string) {
         return pb.collection('document').getOne<PBRecord<Document>>(id);
     },
     Update: async (id: string, content: string) => {
-        return pb.collection('document').update(id, {content});
-    },
+        return pb.collection('document').update<PBRecord<Document>>(id, {content});
+    }
 }
 
 export default DocService;

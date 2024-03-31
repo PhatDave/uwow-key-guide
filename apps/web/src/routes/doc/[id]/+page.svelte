@@ -6,7 +6,10 @@
     import {user} from '$lib/stores/user';
     import {onDestroy, onMount} from "svelte";
     import DocService from "$lib/pocketbase/models/documents";
-    import SpecService from "$lib/pocketbase/models/specs";
+    import Tablist from "$lib/components/Tablist.svelte";
+    import SpecDocService from "$lib/pocketbase/models/spec_doc";
+    import type {PBRecord} from "$lib/pocketbase";
+    import type {Spec} from "$lib/pocketbase/models/specs";
 
     Fa;
 
@@ -15,6 +18,7 @@
     const {id} = data;
     let mode: 'edit' | 'preview' = 'preview';
     let content = data.content;
+    let specContent = "";
     let userIsAdmin = false
     $: userIsAdmin = !!$user && $user.isAdmin;
 
@@ -45,12 +49,6 @@
         }
     }
 
-    let specs = [];
-    SpecService.GetAll().then((res) => {
-        specs = res;
-        console.log(res);
-    });
-
     onMount(() => {
         document.addEventListener('keyup', toggleModeListener);
     });
@@ -78,11 +76,24 @@
     //     With content (markdown) and relation (document)
     //     On edit maybe have a dropdown to select spec
     //     Have user choice be remembered
+
+    function specChanged(event: CustomEvent<PBRecord<Spec>>) {
+        const spec = event.detail;
+        SpecDocService.GetForDocAndSpecId(id, spec.id).then((res) => {
+            if (res.length > 0) {
+                specContent = res[0].content;
+            }
+        });
+    }
 </script>
 
-<section class="form-control flex-1 justify-center">
+<section class="form-control flex-1">
     {#if mode === 'preview'}
-        <Preview {content}/>
+        <Tablist on:select={specChanged}/>
+        <div class="grid grid-cols-2 justify-center">
+            <Preview {content}/>
+            <Preview content="{specContent}"/>
+        </div>
     {:else if mode === 'edit'}
         <Editor {content} documentId={id} on:update={contentUpdated}/>
     {/if}

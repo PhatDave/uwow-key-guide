@@ -43,6 +43,7 @@
             toggleMode();
         }
     }
+
     onMount(() => {
         document.addEventListener('keyup', toggleModeListener);
     });
@@ -50,15 +51,26 @@
         document.removeEventListener('keyup', toggleModeListener);
     });
 
-//     TODO: Enable ctrl+s to save as markdown
-//     TODO: Enable live update
-//     To do this we need a separate API
-//     What the API will do is:
-//     Take in new content
-//     Try to merge the new content with the existing content
-//     If the merge is successful, update the content
-//     If the merge is unsuccessful, replace the old content with the new content
-//     (The idea being last edit wins)
+    //     TODO: Enable ctrl+s to save as markdown
+    //     TODO: Enable live update
+    //     To do this we need a separate API
+    //     What the API will do is:
+    //     Take in new content
+    //     Try to merge the new content with the existing content
+    //     If the merge is successful, update the content
+    //     If the merge is unsuccessful, replace the old content with the new content
+    //     (The idea being last edit wins)
+    //     TODO: Implement class specific info
+    //     Either have a separate doc for each spec for each instance (bad)
+    //     Or have 2 separate previews for each instance
+    //     Where preview #1 is the current one - general instance info
+    //     And preview #2 is the spec specific info
+    //     Where you could then opt in or out of specific specs to display their specific info
+    //     In pane #2
+    //     In DB do maybe spec-instance
+    //     With content (markdown) and relation (document)
+    //     On edit maybe have a dropdown to select spec
+    //     Have user choice be remembered
 </script>
 
 <section class="form-control flex-1 justify-center">

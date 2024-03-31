@@ -1,20 +1,7 @@
 <script lang="ts">
     import '../app.postcss';
     import {env} from '$env/dynamic/public';
-    import {theme} from '$lib/stores/theme';
-    import {browser} from '$app/environment';
-    import {onMount} from 'svelte';
     import Nav from '$lib/components/Nav.svelte';
-
-    onMount(() => {
-        if (browser) theme.init();
-    });
-    $: {
-        if (browser && $theme) {
-            document.documentElement.setAttribute('data-theme', $theme);
-            document.documentElement.classList.value = $theme;
-        }
-    }
 </script>
 
 <svelte:head>

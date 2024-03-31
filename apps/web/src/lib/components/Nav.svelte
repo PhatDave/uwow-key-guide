@@ -1,5 +1,4 @@
 <script lang="ts">
-    import ThemeToggle from '$lib/components/ThemeToggle.svelte';
     import {faDiscord} from '@fortawesome/free-brands-svg-icons';
     import Fa from 'svelte-fa';
 
@@ -8,9 +7,7 @@
     Fa;
 </script>
 
-<div
-        class="flex h-16 select-none items-center justify-between border-b-[1px] border-b-black/25 px-4 dark:border-b-white/25 md:px-8"
->
+<div class="flex h-16 select-none items-center justify-between border-b-[1px] border-b-black/25 px-4 dark:border-b-white/25 md:px-8">
     <!-- Navigation-->
     <nav>
         <a class="hover:text-primary text-4xl font-bold transition-all" href="/">
@@ -19,7 +16,6 @@
     </nav>
 
     <div class="flex items-center gap-x-4">
-        <ThemeToggle/>
         {#if !$user}
             <button
                     class="btn rounded-box bg-transparent outline outline-1"

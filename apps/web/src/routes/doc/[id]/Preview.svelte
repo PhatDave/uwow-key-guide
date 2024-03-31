@@ -1,6 +1,5 @@
 <script lang="ts">
     import 'github-markdown-css/github-markdown-dark.css';
-    // TODO: This doesn't look very good in light mode
     import {marked} from 'marked';
     import {fade} from 'svelte/transition';
 

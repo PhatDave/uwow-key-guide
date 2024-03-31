@@ -33,10 +33,11 @@
     onMount(() => {
         ticker = setInterval(() => {
             dispatch('update', {content: content});
-        }, 3000);
+        }, 300);
     });
     onDestroy(() => {
         clearInterval(ticker);
+        dispatch('update', {content: content});
     });
 </script>
 

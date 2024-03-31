@@ -1,7 +1,7 @@
 <script lang="ts">
-  import {getDocuments, pbImgToUrl} from '$lib/pocketbase';
+    import {getDocuments, pbImgToUrl} from '$lib/pocketbase';
 
-  export let doc: Awaited<ReturnType<typeof getDocuments>>[number];
+    export let doc: Awaited<ReturnType<typeof getDocuments>>[number];
 
     const imgUrl = pbImgToUrl(doc, doc.thumbnail);
 </script>

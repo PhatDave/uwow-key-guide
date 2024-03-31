@@ -1,8 +1,8 @@
 <script lang="ts">
-    import {getDocuments} from '$lib/pocketbase';
     import MenuItem from '$lib/components/MenuItem.svelte';
+    import DocService from "$lib/pocketbase/models/documents.js";
 
-    const documents = getDocuments();
+    const documents = DocService.GetAll();
 </script>
 
 {#await documents}

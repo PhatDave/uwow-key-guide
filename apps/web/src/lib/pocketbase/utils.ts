@@ -6,7 +6,7 @@ type ImageThumb = {
     y: number;
 };
 
-export function pbImgToUrl(record: RecordModel, image: string, thumb?: ImageThumb) {
+export function PBImgToUrl(record: RecordModel, image: string, thumb?: ImageThumb) {
     let url = `${POCKETBASE_URL}/api/files/${record.collectionId}/${record.id}/${image}`;
     url += thumb ? `?${thumb.x}x${thumb.y}` : '';
     return url;

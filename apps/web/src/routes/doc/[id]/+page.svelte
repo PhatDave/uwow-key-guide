@@ -4,8 +4,8 @@
     import {faEye, faPen} from '@fortawesome/free-solid-svg-icons';
     import Fa from 'svelte-fa';
     import {user} from '$lib/stores/user';
-    import {pb} from "$lib/pocketbase";
     import {onDestroy, onMount} from "svelte";
+    import DocService from "$lib/pocketbase/models/documents";
 
     Fa;
 
@@ -34,7 +34,7 @@
     }
 
     function updateApi(content: string) {
-        pb.collection('document').update(id, {content});
+        DocService.Update(id, content);
     }
 
     function toggleModeListener(e) {
@@ -43,6 +43,12 @@
             toggleMode();
         }
     }
+
+    // let specs = [];
+    // SpecService.GetAll().then((res) => {
+    //     specs = res;
+    //     console.log(res);
+    // });
 
     onMount(() => {
         document.addEventListener('keyup', toggleModeListener);

@@ -5,8 +5,10 @@ type Image = {
     document: string;
 };
 
-export async function saveImg(image: File, documentId: string) {
-    const img = await pb.collection('image').create<PBRecord<Image>>({image, document: documentId});
-
-    return img;
+const ImageService = {
+    async Save(image: File, documentId: string): Promise<PBRecord<Image>> {
+        return await pb.collection('image').create<PBRecord<Image>>({image, document: documentId});
+    },
 }
+
+export default ImageService;

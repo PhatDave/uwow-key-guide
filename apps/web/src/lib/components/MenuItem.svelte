@@ -1,9 +1,11 @@
 <script lang="ts">
-    import {getDocuments, pbImgToUrl} from '$lib/pocketbase';
+    import type {PBRecord} from '$lib/pocketbase';
+    import {PBImgToUrl} from '$lib/pocketbase';
 
-    export let doc: Awaited<ReturnType<typeof getDocuments>>[number];
+    export let doc: Awaited<PBRecord<Document>>[number];
 
-    const imgUrl = pbImgToUrl(doc, doc.thumbnail);
+    console.log(doc);
+    const imgUrl = PBImgToUrl(doc, doc.thumbnail);
 </script>
 
 <li class="rounded-box">

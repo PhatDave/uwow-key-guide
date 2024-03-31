@@ -1,9 +1,9 @@
-import {getDocumentContent} from '$lib/pocketbase';
 import type {PageLoad} from './$types';
+import DocService from "../../../lib/pocketbase/models/documents";
 
 export const load = (async ({params}) => {
     const {id} = params;
-    const content = await getDocumentContent(id);
+    const doc = await DocService.GetById(id);
 
-    return {id, content};
+    return {id, content: doc.content};
 }) satisfies PageLoad;

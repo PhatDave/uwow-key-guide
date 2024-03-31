@@ -5,9 +5,9 @@
     import {attachment} from '@cartamd/plugin-attachment';
     import { createEventDispatcher } from 'svelte';
 
-    import {saveImg} from '$lib/pocketbase/models/images';
-    import {pbImgToUrl} from '$lib/pocketbase/index.js';
+    import {PBImgToUrl} from '$lib/pocketbase/index.js';
     import {onDestroy, onMount} from "svelte";
+    import ImageService from "$lib/pocketbase/models/images";
 
     // The content of the editor
     export let content: string;
@@ -23,8 +23,8 @@
             attachment({
                 upload: async file => {
                     console.log(file);
-                    const record = await saveImg(file, documentId);
-                    return pbImgToUrl(record, record.image);
+                    const record = await ImageService.Save(file, documentId);
+                    return PBImgToUrl(record, record.image);
                 }
             })
         ]

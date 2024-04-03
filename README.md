@@ -1,4 +1,4 @@
-# [Uwow](https://uwow.biz/) keymaster <img src="https://github.com/PhatDave/uwow-key-guide/blob/dev/static/app.png?raw=true" width="580" style="border-radius:2rem"/>![img.png](img.png)
+# [Uwow](https://uwow.biz/) keymaster <img src="https://github.com/PhatDave/uwow-key-guide/blob/master/apps/web/static/app.png?raw=true" width="580" style="border-radius:2rem"/>
 
 ## A simple website hosting various guides and informational documents for the Uwow community.
 

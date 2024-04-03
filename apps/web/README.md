@@ -1,25 +1,13 @@
-# Svelte-Kit Template <img src="https://raw.githubusercontent.com/Fractal-Tess/SvelteKit/dev/static/svelte.svg" width="30" align="center" />
+# [Uwow](https://uwow.biz/) keymaster <img src="https://github.com/PhatDave/uwow-key-guide/blob/dev/static/app.png?raw=true" width="580" style="border-radius:2rem"/>![img.png](img.png)
 
+## A simple website hosting various guides and informational documents for the Uwow community.
 
+#### Currently hosted on [keymaster.quack-lab](https://keymaster.site.quack-lab.dev/)
 
-<div align="center">
-<img src="https://github.com/Fractal-Tess/SvelteKit/blob/dev/static/app.jpeg?raw=true" width="580" style="border-radius:2rem"/>
-</div>
+## Contributions
 
-#### A simple Svelte-Kit starter with a few opinionated additions.
+A special thanks to [Villian](https://github.com/Fractal-Tess) for contributing to this project.
 
-- Typescript
-- UI:
-  - Tailwind
-  - Postcss
-  - DaisyUI
-  - Fontawesome
-  - Roboto Font
-  - Themes (cookies)
-- Code Quality
-  - Prettier
-  - Eslint
-  - Lint-Staged
-- Automation & Testing
-  - Husky
-  - Playwright
+<a href="https://github.com/Fractal-Tess">
+  <img src="https://contrib.rocks/image?repo=PhatDave/uwow-key-guide&anon=1" />
+</a>
